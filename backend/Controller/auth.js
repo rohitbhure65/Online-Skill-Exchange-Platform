@@ -71,37 +71,33 @@ exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Check for existing user
-        const existingUser = await User.findOne({ email });
-        if (!existingUser) {
+        // Find User by email
+        const ExistingUser = await User.findOne({ email });
+        if (!ExistingUser) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
 
-        // Compare passwords
-        const isMatch = await bcrypt.compare(password, existingUser.password);
+        // Check if the password is correct
+        const isMatch = await bcrypt.compare(password, ExistingUser.password);
         if (!isMatch) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
+        
+        const token = ExistingUser.token
 
-        // Generate new token
-        const token = existingUser.token;
-
-        // Verify the existing token (optional, depending on your logic)
-        const decoded = jwt.verify(token, publickey, { algorithms: 'RS256' });
-
-        // Create a new token
-        const newToken = jwt.sign(
+        const decoded = jwt.verify(token, publickey, { algorithm: 'RS256' });
+        const newtoken = jwt.sign(
             {
                 _id: decoded._id,
                 email: decoded.email
             },
-            privatekey, // Ensure you have the correct secret
+            publickey,
             { expiresIn: '24h' }
+
         );
 
-        // Set token in response header
-        res.set("Authorization", `Bearer ${newToken}`);
-        res.status(200).json({ message: "Login successful" });
+        res.set("Authorization", `Bearer ${newtoken}`);
+        res.status(201).json({ message: "login successful" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error during login' });
