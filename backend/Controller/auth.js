@@ -10,7 +10,7 @@ const publickey = fs.readFileSync(path.resolve(__dirname, '../public.key'), 'utf
 exports.signup = async (req, res) => {
     try {
         const {
-            username,
+            name,
             email,
             phone,
             gender,
@@ -20,7 +20,7 @@ exports.signup = async (req, res) => {
             location: { city, state, country },
             skills_offered,
             skills_needed,
-            ratings: { average_rating, total_ratings }
+            rating: { average_rating, total_ratings }
         } = req.body;
 
         const existingUser = await User.findOne({ email });
@@ -31,18 +31,14 @@ exports.signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
-            username,
+            name,
             email,
             bio,
             password: hashedPassword,
-            age,
-            city,
-            state,
-            country,
+            location: { city, state, country },
             skills_needed,
             skills_offered,
-            average_rating,
-            total_ratings,
+            rating: { average_rating, total_ratings },
             profile_pic,
             gender,
             phone
@@ -75,33 +71,37 @@ exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const ExistingUser = await User.findOne({ email });
-        if (!ExistingUser) {
+        // Check for existing user
+        const existingUser = await User.findOne({ email });
+        if (!existingUser) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
 
-
-        const isMatch = await bcrypt.compare(password, ExistingUser.password);
+        // Compare passwords
+        const isMatch = await bcrypt.compare(password, existingUser.password);
         if (!isMatch) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
 
+        // Generate new token
+        const token = existingUser.token;
 
-        const token = ExistingUser.token
+        // Verify the existing token (optional, depending on your logic)
+        const decoded = jwt.verify(token, publickey, { algorithms: 'RS256' });
 
-        const decoded = jwt.verify(token, publickey, { algorithm: 'RS256' });
-        const newtoken = jwt.sign(
+        // Create a new token
+        const newToken = jwt.sign(
             {
                 _id: decoded._id,
                 email: decoded.email
             },
-            process.env.SECRET_KEY,
+            privatekey, // Ensure you have the correct secret
             { expiresIn: '24h' }
-
         );
 
-        res.set("Authorization", `Bearer ${newtoken}`);
-        res.status(201).json({ message: "login successful" });
+        // Set token in response header
+        res.set("Authorization", `Bearer ${newToken}`);
+        res.status(200).json({ message: "Login successful" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error during login' });
