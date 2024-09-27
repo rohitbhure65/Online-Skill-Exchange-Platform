@@ -4,7 +4,6 @@ const router = express.Router()
 const usercontrollers = require('../Controller/user')
 
 router
-    // .post('/users', usercontrollers.postusers)
     .get('/users', usercontrollers.getUsers)
     .get('/user/:id', usercontrollers.getUser)
     .put('/user/:id', usercontrollers.replaceUser)
