@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    id: { type: Number },
     name: { type: String, required: true },
     phone: { type: Number, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     profile_pic: { type: String },
+    gender: { type: String },
     bio: { type: String },
     location: {
         city: { type: String },
@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
         average_rating: { type: Number },
         total_rating: { type: Number }
     },
+    token: { type: String },
     created_at: {
         type: Date,
         default: Date.now

@@ -1,22 +1,57 @@
 const User = require('../Model/user')
 
-exports.getusers = async (req, res) => {
+exports.getUsers = async (req, res) => {
     try {
         const response = await User.find()
         console.log(response)
-        res.status(200).json({response})
+        res.status(200).json({ response })
     } catch (err) {
         console.log(err)
+        res.status(500).json({ error: 'users not found' });
     }
 }
 
-exports.getuser = async (req, res) =>{
-    try{
-        const id = req.query.id
+exports.getUser = async (req, res) => {
+    try {
+        const id = req.params.id
         const response = await User.findById(id)
         console.log(response)
-        res.status(200).json({response})
-    }catch(err){
+        res.status(200).json(response)
+    } catch (err) {
         console.log(err)
+        res.status(500).json({ error: 'Error user not found ' });
     }
 }
+
+// UPDATE - PUT /users/:id
+exports.replaceUser = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const user = await User.findOneAndReplace({ _id: id }, req.body, { new: true });
+        res.status(201).json(user);
+    } catch (err) {
+        res.status(401).json(err);
+    }
+};
+
+// UPDATE - PATCH /users/:id
+exports.updateUser = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const user = await User.findOneAndUpdate({ _id: id }, req.body, { new: true });
+        res.status(201).json(user);
+    } catch (err) {
+        res.status(401).json(err);
+    }
+};
+
+// DELETE - DELETE /users/:id
+exports.deleteUser = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const user = await User.findOneAndDelete({ _id: id }, { new: true });
+        res.status(201).json(user);
+    } catch (err) {
+        res.status(401).json(err);
+    }
+};
