@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Permit users to share their skills on the Internet Online, anyone can connect with others in their niche and share",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rohitbhure65/Online-Skill-Exchange-Platform.git"
+  },
+  "keywords": [
+    "online skill sharing platform"
+  ],
+  "author": "rohit bhure & saloni sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rohitbhure65/Online-Skill-Exchange-Platform/issues"
+  },
+  "homepage": "https://github.com/rohitbhure65/Online-Skill-Exchange-Platform#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "mongoose": "^8.6.4"
+  }
+}
