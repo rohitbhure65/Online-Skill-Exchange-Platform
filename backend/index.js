@@ -14,9 +14,10 @@ const PORT = process.env.PORT || 8000
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded())
-app.use('/api/v1', authController.verifyToken, userroutes.routes)
-app.use('/api/v1', authController.verifyToken, skillsroutes.routes)
-app.use('/api/v1', authController.verifyToken, listingroutes.routes)
+// app.use('/api/v1', authController.verifyToken, userroutes.routes)
+app.use('/api/v1', userroutes.routes)
+app.use('/api/v1', skillsroutes.routes)
+app.use('/api/v1', listingroutes.routes)
 app.use('/auth', authroutes)
 
 app.listen(PORT, () => {

@@ -20,7 +20,6 @@ exports.signup = async (req, res) => {
             location: { city, state, country },
             skills_offered,
             skills_needed,
-            rating: { average_rating, total_ratings }
         } = req.body;
 
         const existingUser = await User.findOne({ email });
@@ -38,7 +37,6 @@ exports.signup = async (req, res) => {
             location: { city, state, country },
             skills_needed,
             skills_offered,
-            rating: { average_rating, total_ratings },
             profile_pic,
             gender,
             phone
@@ -82,7 +80,7 @@ exports.login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
-        
+
         const token = ExistingUser.token
 
         const decoded = jwt.verify(token, publickey, { algorithm: 'RS256' });
