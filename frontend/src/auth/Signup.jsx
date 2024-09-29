@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
   const [user, setUser] = useState({
@@ -18,6 +19,7 @@ const SignupForm = () => {
     skills_needed: "",
   });
 
+  const navigate = useNavigate()
   const [skills, setSkills] = useState([]);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -91,6 +93,8 @@ const SignupForm = () => {
         skills_offered: "",
         skills_needed: "",
       });
+
+      navigate("/auth/login");
     } catch (err) {
       console.error(err);
       setError("Signup failed. Please try again.");
@@ -98,7 +102,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-8 bg-white shadow-md rounded-lg mt-10">
+    <div className="container max-w-xl mx-auto p-8 bg-white shadow-md rounded-lg mt-10 mb-10">
       <h2 className="text-2xl font-bold mb-6 text-center">Signup Form</h2>
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="grid grid-cols-1 gap-4">
@@ -205,7 +209,6 @@ const SignupForm = () => {
         <div className="mt-4">
           <h3 className="font-semibold">Skills</h3>
 
-          {/* Dropdown for Skills Offered */}
           <select
             className="border rounded-lg p-2"
             name="skills_offered"

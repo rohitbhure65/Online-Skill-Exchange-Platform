@@ -3,9 +3,9 @@ const Skill = require('../Model/skill');
 // CREATE - POST /skills
 exports.createSkill = async (req, res) => {
     try {
-        const newSkill = new Skill(req.body); // Create a new Skill instance with the request body
-        const savedSkill = await newSkill.save(); // Save the new skill to the database
-        res.status(201).json(savedSkill); // Send a success response with the created skill
+        const newSkill = new Skill(req.body); 
+        const savedSkill = await newSkill.save(); 
+        res.status(201).json(savedSkill); 
     } catch (err) {
         console.log(err);
         res.status(400).json({ error: 'Error creating skill' });

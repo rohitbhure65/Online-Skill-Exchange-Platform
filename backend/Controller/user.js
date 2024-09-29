@@ -2,7 +2,7 @@ const User = require('../Model/user')
 
 exports.getUsers = async (req, res) => {
     try {
-        const response = await User.find().populate('skills_offered', 'skills_needed')
+        const response = await User.find().populate('skills_offered').populate('skills_needed')
         console.log(response)
         res.status(200).json({ response })
     } catch (err) {
@@ -14,7 +14,7 @@ exports.getUsers = async (req, res) => {
 exports.getUser = async (req, res) => {
     try {
         const id = req.params.id
-        const response = await User.findById(id).populate('skills_offered', 'skills_needed')
+        const response = await User.findById(id).populate('skills_offered').populate('skills_needed')
         console.log(response)
         res.status(200).json(response)
     } catch (err) {
@@ -38,7 +38,7 @@ exports.replaceUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     const id = req.params.id;
     try {
-        const user = await User.findOneAndUpdate({ _id: id }, req.body, { new: true }).populate('skills_offered', 'skills_needed');
+        const user = await User.findOneAndUpdate({ _id: id }, req.body, { new: true }).populate('skills_offered').populate('skills_needed')
         res.status(201).json(user);
     } catch (err) {
         res.status(401).json(err);
@@ -49,7 +49,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     const id = req.params.id;
     try {
-        const user = await User.findOneAndDelete({ _id: id }, { new: true }).populate('skills_offered', 'skills_needed');
+        const user = await User.findOneAndDelete({ _id: id }, { new: true }).populate('skills_offered').populate('skills_needed')
         res.status(201).json(user);
     } catch (err) {
         res.status(401).json(err);
