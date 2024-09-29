@@ -4,12 +4,12 @@ const Card = ({ listing }) => {
   // Destructure listing correctly
   const {
     user_id: {
-      name,
+      name: username,
       profile_pic,
       rating: { average_rating, total_rating },
       location: { city, state, country },
       bio,
-      phone,
+      phone
     },
     details,
     type,
@@ -21,10 +21,10 @@ const Card = ({ listing }) => {
       <img
         className="w-full h-48 object-cover"
         src={profile_pic}
-        alt={`${name}'s profile`}
+        alt={`${username}'s profile`}
       />
       <div className="p-5">
-        <h2 className="text-xl font-bold">{name}</h2>
+        <h2 className="text-xl font-bold">{username}</h2>
         <p className="text-gray-600">{bio}</p>
         <p className="text-gray-500">
           Location: {city}, {state}, {country}
@@ -37,6 +37,7 @@ const Card = ({ listing }) => {
         </div>
         <h3 className="mt-4 text-lg font-semibold">Details</h3>
         <p className="text-gray-700">{details}</p>
+ 
         <div className="flex justify-between">
           <p
             className={`mt-2 font-semibold ${

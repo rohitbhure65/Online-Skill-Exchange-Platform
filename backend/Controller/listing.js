@@ -3,26 +3,28 @@ const Listing = require('../Model/listing');
 // GET all listings
 exports.getListings = async (req, res) => {
     try {
-        const { search, city, skill, rating, status, sort, order } = req.query;
+        const { city, skill, rating, status, type, sort, order } = req.query;
         const queryobject = {};
 
-        if (search) {
-            queryobject.search = { $regex: search, $options: "i" };
-        }
-        if (skill) {
-            queryobject.skill = { $regex: skill, $options: "i" };
-        }
+        // Building the query based on provided filters
         if (city) {
-            queryobject.city = city;
-        }
-        if (status) {
-            queryobject.status = status;
+            queryobject['location.city'] = { $regex: city, $options: 'i' }
         }
         if (rating) {
-            queryobject.rating = rating;
+            queryobject['user_id.rating.average_rating'] = { $gte: parseFloat(rating) };
+        }
+        if (skill) {
+            queryobject['skill_id.name'] = { $regex: skill, $options: 'i' };
+        }
+        if (status) {
+            queryobject.status = { $regex: status, $options: 'i' }
+        }
+        if (type) {
+            queryobject.type = { $regex: type, $options: 'i' }
         }
 
-        let productQuery = Listing.find().populate('user_id').populate('skill_id');
+        console.log(queryobject)
+        let productQuery = Listing.find(queryobject).populate('user_id').populate('skill_id').populate('skills_needed');
 
         // Sort validation
         if (sort) {
@@ -34,11 +36,11 @@ exports.getListings = async (req, res) => {
         let limit = Math.max(Number(req.query.limit) || 6);
         let skip = (page - 1) * limit;
 
-        productQuery = productQuery.skip(skip).limit(limit).exec();
+        // productQuery = productQuery.skip(skip).limit(limit).exec();
 
         const finalquery = await productQuery;
 
-        res.status(200).json({finalquery});
+        res.status(200).json(finalquery);
     } catch (err) {
         console.error(err); // Log the detailed error
         res.status(500).json({ error: 'Listings not found', details: err.message });
