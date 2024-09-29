@@ -28,7 +28,7 @@ const Listing = () => {
   const fetchListings = async () => {
     try {
       // Create URL query by filtering out empty values
-      const response = await fetch(`http://localhost:5000/api/v1/listings`);
+      const response = await fetch(`https://online-skill-exchange-platform.onrender.com/api/v1/listings`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch listings");
@@ -51,7 +51,7 @@ const Listing = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/v1/users`);
+        const response = await fetch(`https://online-skill-exchange-platform.onrender.com/api/v1/users`);
         if (!response.ok) {
           throw new Error("Failed to fetch users");
         }
@@ -69,7 +69,7 @@ const Listing = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/v1/skills");
+        const response = await fetch("https://online-skill-exchange-platform.onrender.com/api/v1/skills");
         if (!response.ok) {
           throw new Error("Failed to fetch skills");
         }

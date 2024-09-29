@@ -6,7 +6,7 @@ const SkillCategories = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/v1/skills");
+        const response = await fetch("https://online-skill-exchange-platform.onrender.com/api/v1/skills");
         if (!response.ok) {
           throw new Error("Failed to fetch skills");
         }

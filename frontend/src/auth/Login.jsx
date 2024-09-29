@@ -28,7 +28,7 @@ const LoginForm = () => {
 
     try {
       // Post data to the backend
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch("https://online-skill-exchange-platform.onrender.com/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
