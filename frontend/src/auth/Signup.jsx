@@ -53,7 +53,7 @@ const SignupForm = () => {
           throw new Error("Failed to fetch skills");
         }
         const data = await response.json();
-        console.log(data.response);
+
         setSkills(data.response); // Assuming data is an array of skills
       } catch (err) {
         console.error("Error fetching skills:", err);

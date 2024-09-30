@@ -28,14 +28,15 @@ const Listing = () => {
   const fetchListings = async () => {
     try {
       // Create URL query by filtering out empty values
-      const response = await fetch(`https://online-skill-exchange-platform.onrender.com/api/v1/listings`);
+      const response = await fetch(
+        `https://online-skill-exchange-platform.onrender.com/api/v1/listings`
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch listings");
       }
 
       const data = await response.json();
-      console.log("Listings: ", data);
       setListings(Array.isArray(data) ? data : []); // Ensure it's an array
     } catch (err) {
       console.error("Error fetching listings:", err);
@@ -51,12 +52,13 @@ const Listing = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`https://online-skill-exchange-platform.onrender.com/api/v1/users`);
+        const response = await fetch(
+          `https://online-skill-exchange-platform.onrender.com/api/v1/users`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch users");
         }
         const data = await response.json();
-        console.log("Users: ", data.response);
         setUsers(Array.isArray(data.response) ? data.response : []); // Ensure it's an array
       } catch (err) {
         console.error("Error fetching users:", err);
@@ -69,12 +71,13 @@ const Listing = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch("https://online-skill-exchange-platform.onrender.com/api/v1/skills");
+        const response = await fetch(
+          "https://online-skill-exchange-platform.onrender.com/api/v1/skills"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch skills");
         }
         const data = await response.json();
-        console.log("Skills: ", data.response);
         setSkills(Array.isArray(data.response) ? data.response : []); // Ensure it's an array
       } catch (err) {
         console.error("Error fetching skills:", err);

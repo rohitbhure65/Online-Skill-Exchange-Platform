@@ -3,11 +3,9 @@ import { Link } from "react-router-dom";
 import SkillCategories from "../components/Skills";
 
 const Header = () => {
-
-
   return (
     <>
-      <section className="bg-white dark:bg-gray-900">
+      <section className="bg-gray-900 text-white">
         <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
           <div className="mr-auto place-self-center lg:col-span-7">
             <h1 className=" max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white animate-fade-in">
@@ -37,7 +35,7 @@ const Header = () => {
             </Link>
             <Link
               to="/page/listings" // Change this to your desired route
-              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 transition-transform transform hover:scale-105 animate-button"
+              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 transition-transform transform hover:scale-105 animate-button"
             >
               Search Your Interest
             </Link>
@@ -48,8 +46,7 @@ const Header = () => {
         </div>
       </section>
 
-        <SkillCategories/>
-
+      <SkillCategories />
     </>
   );
 };
