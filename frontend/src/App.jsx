@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Listing from "./pages/Listing";
+import axios from "./axios";
 
 const App = () => {
   return (

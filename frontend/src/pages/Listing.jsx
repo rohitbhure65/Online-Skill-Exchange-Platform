@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
+import axios from "axios";
 
 const Listing = () => {
   const [listings, setListings] = useState([]);
@@ -28,16 +29,9 @@ const Listing = () => {
   const fetchListings = async () => {
     try {
       // Create URL query by filtering out empty values
-      const response = await fetch(
-        `https://online-skill-exchange-platform.onrender.com/api/v1/listings`
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch listings");
-      }
-
-      const data = await response.json();
-      setListings(Array.isArray(data) ? data : []); // Ensure it's an array
+      const response = await axios.get('listings');
+      console.log(response)
+      setListings(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
       console.error("Error fetching listings:", err);
     }
@@ -52,14 +46,8 @@ const Listing = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(
-          `https://online-skill-exchange-platform.onrender.com/api/v1/users`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
-        const data = await response.json();
-        setUsers(Array.isArray(data.response) ? data.response : []); // Ensure it's an array
+        const response = await axios.get('/users');
+        setUsers(Array.isArray(response.data.response) ? response.data.response : []);
       } catch (err) {
         console.error("Error fetching users:", err);
       }
@@ -71,14 +59,8 @@ const Listing = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch(
-          "https://online-skill-exchange-platform.onrender.com/api/v1/skills"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch skills");
-        }
-        const data = await response.json();
-        setSkills(Array.isArray(data.response) ? data.response : []); // Ensure it's an array
+        const response = await axios.get('/skills');
+        setSkills(Array.isArray(response.data.response) ? response.data.response : []);
       } catch (err) {
         console.error("Error fetching skills:", err);
       }

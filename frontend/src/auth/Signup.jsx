@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +20,7 @@ const SignupForm = () => {
     skills_needed: "",
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [skills, setSkills] = useState([]);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -48,7 +49,7 @@ const SignupForm = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch("https://online-skill-exchange-platform.onrender.com/api/v1/skills");
+        const response = await axios.get("/skills");
         if (!response.ok) {
           throw new Error("Failed to fetch skills");
         }
