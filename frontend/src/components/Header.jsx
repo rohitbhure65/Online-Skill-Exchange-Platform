@@ -41,7 +41,7 @@ const Header = () => {
             </Link>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <img src="/mobile-app.svg" alt="mockup" />
+            <img src="/mobile-app.png" alt="mockup" />
           </div>
         </div>
       </section>
