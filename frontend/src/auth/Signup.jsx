@@ -49,13 +49,10 @@ const SignupForm = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get("/skills");
-        if (!response.ok) {
-          throw new Error("Failed to fetch skills");
-        }
-        const data = await response.json();
-
-        setSkills(data.response); // Assuming data is an array of skills
+        const response = await axios.get("api/v1/skills");
+        console.log(response.data.response)
+        const data = await response.data.response;
+        setSkills(data); // Assuming data is an array of skills
       } catch (err) {
         console.error("Error fetching skills:", err);
       }
