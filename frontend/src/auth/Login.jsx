@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginForm = () => {
   const [user, setUser] = useState({
@@ -10,7 +11,6 @@ const LoginForm = () => {
 
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -28,12 +28,10 @@ const LoginForm = () => {
 
     try {
       // Post data to the backend
-      const response = await fetch("https://online-skill-exchange-platform.onrender.com/auth/login", {
-        method: "POST",
+      const response = await axios.post("auth/login", user, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(user),
       });
 
       if (!response.ok) {

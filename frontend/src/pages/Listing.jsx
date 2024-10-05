@@ -29,7 +29,7 @@ const Listing = () => {
   const fetchListings = async () => {
     try {
       // Create URL query by filtering out empty values
-      const response = await axios.get('listings');
+      const response = await axios.get('api/v1/listings');
       console.log(response)
       setListings(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
@@ -46,7 +46,7 @@ const Listing = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('/users');
+        const response = await axios.get('api/v1/users');
         setUsers(Array.isArray(response.data.response) ? response.data.response : []);
       } catch (err) {
         console.error("Error fetching users:", err);
@@ -59,7 +59,7 @@ const Listing = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get('/skills');
+        const response = await axios.get('api/v1/skills');
         setSkills(Array.isArray(response.data.response) ? response.data.response : []);
       } catch (err) {
         console.error("Error fetching skills:", err);

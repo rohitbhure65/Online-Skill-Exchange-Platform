@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -6,12 +7,10 @@ const SkillCategories = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await fetch("https://online-skill-exchange-platform.onrender.com/api/v1/skills");
-        if (!response.ok) {
-          throw new Error("Failed to fetch skills");
-        }
-        const data = await response.json();
-        setSkills(data.response); // Assuming data is an array of skills
+        const response = await axios.get("api/v1/skills");
+        console.log(response.data.response)
+        const data = await response.data.response;
+        setSkills(data); // Assuming data is an array of skills
       } catch (err) {
         console.error("Error fetching skills:", err);
       }

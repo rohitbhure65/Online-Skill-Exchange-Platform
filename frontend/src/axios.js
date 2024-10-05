@@ -1,6 +1,6 @@
 import axios from "axios";
 /////////// change base url here ///////////////////
-const BASE_URL = 'https://online-skill-exchange-platform.onrender.com/api/v1'
+const BASE_URL = 'https://online-skill-exchange-platform.onrender.com/'
 ////////////////////////////////////////////////////
-axios.defaults.baseURL = BASE_URL
-export default axios;
+const axiosurl = axios.defaults.baseURL = BASE_URL
+export default axiosurl;

@@ -71,12 +71,10 @@ const SignupForm = () => {
 
     try {
       // Post data to the backend
-      const response = await fetch("http://localhost:5000/auth/signup", {
-        method: "POST",
+      const response = await axios.post("auth/login", user, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(user),
       });
       console.log(response.data);
       setSuccessMessage("Signup successful!");
