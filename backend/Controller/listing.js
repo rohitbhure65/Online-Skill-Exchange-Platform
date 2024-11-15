@@ -3,49 +3,36 @@ const Listing = require('../Model/listing');
 // GET all listings
 exports.getListings = async (req, res) => {
     try {
-        const { city, skill, rating, status, type, sort, order } = req.query;
-        const queryobject = {};
+        const { city, skill, rating, status, type, sort, order, page = 1, limit = 6 } = req.query;
+        const queryObject = {};
 
-        // Building the query based on provided filters
-        if (city) {
-            queryobject['location.city'] = { $regex: city, $options: 'i' }
-        }
-        if (rating) {
-            queryobject['user_id.rating.average_rating'] = { $gte: parseFloat(rating) };
-        }
-        if (skill) {
-            queryobject['skill_id.name'] = { $regex: skill, $options: 'i' };
-        }
-        if (status) {
-            queryobject.status = { $regex: status, $options: 'i' }
-        }
-        if (type) {
-            queryobject.type = { $regex: type, $options: 'i' }
-        }
+        // Apply filters
+        if (city) queryObject['location.city'] = { $regex: city, $options: 'i' };
+        if (rating) queryObject['user_id.rating.average_rating'] = { $gte: parseFloat(rating) };
+        if (skill) queryObject['skill_id.name'] = { $regex: skill, $options: 'i' };
+        if (status) queryObject.status = { $regex: status, $options: 'i' };
+        if (type) queryObject.type = { $regex: type, $options: 'i' };
 
-        console.log(queryobject)
-        let productQuery = Listing.find(queryobject).populate('user_id').populate('skill_id').populate('skills_needed');
+        let productQuery = Listing.find(queryObject).populate('user_id').populate('skill_id').populate('skills_needed');
 
-        // Sort validation
+        // Apply sorting
         if (sort) {
-            productQuery = productQuery.sort({ [sort]: order });
+            const sortOrder = order === 'desc' ? -1 : 1;
+            productQuery = productQuery.sort({ [sort]: sortOrder });
         }
 
-        // Pagination
-        let page = Math.max(Number(req.query.page) || 1);
-        let limit = Math.max(Number(req.query.limit) || 6);
-        let skip = (page - 1) * limit;
+        // Apply pagination
+        const skip = (page - 1) * limit;
+        productQuery = productQuery.skip(skip).limit(Number(limit));
 
-        // productQuery = productQuery.skip(skip).limit(limit).exec();
-
-        const finalquery = await productQuery;
-
-        res.status(200).json(finalquery);
+        const finalQuery = await productQuery;
+        res.status(200).json(finalQuery);
     } catch (err) {
-        console.error(err); // Log the detailed error
+        console.error(err);
         res.status(500).json({ error: 'Listings not found', details: err.message });
     }
 };
+
 
 
 // GET a single listing by ID
@@ -53,10 +40,10 @@ exports.getListing = async (req, res) => {
     try {
         const id = req.params.id;
         const response = await Listing.findById(id).populate('user_id').populate('skill_id')
-        console.log(response);
+        // // console.log(response);
         res.status(200).json(response);
     } catch (err) {
-        console.log(err);
+        // // console.log(err);
         res.status(500).json({ error: 'Listing not found' });
     }
 };
@@ -68,7 +55,7 @@ exports.createListing = async (req, res) => {
         const savedListing = await newListing.save(); // Save the new listing to the database
         res.status(201).json(savedListing); // Send a success response with the created listing
     } catch (err) {
-        console.log(err);
+        // // console.log(err);
         res.status(400).json({ error: 'Error creating listing' });
     }
 };

@@ -50,7 +50,7 @@ const SignupForm = () => {
     const fetchSkills = async () => {
       try {
         const response = await axios.get("api/v1/skills");
-        console.log(response.data.response)
+        // console.log(response.data.response);
         const data = await response.data.response;
         setSkills(data); // Assuming data is an array of skills
       } catch (err) {

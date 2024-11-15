@@ -3,11 +3,11 @@ const Skill = require('../Model/skill');
 // CREATE - POST /skills
 exports.createSkill = async (req, res) => {
     try {
-        const newSkill = new Skill(req.body); 
-        const savedSkill = await newSkill.save(); 
-        res.status(201).json(savedSkill); 
+        const newSkill = new Skill(req.body);
+        const savedSkill = await newSkill.save();
+        res.status(201).json(savedSkill);
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(400).json({ error: 'Error creating skill' });
     }
 };
@@ -16,10 +16,10 @@ exports.createSkill = async (req, res) => {
 exports.getSkills = async (req, res) => {
     try {
         const response = await Skill.find();
-        console.log(response);
+        // console.log(response);
         res.status(200).json({ response });
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({ error: 'Skills not found' });
     }
 };
@@ -29,10 +29,10 @@ exports.getSkill = async (req, res) => {
     try {
         const id = req.params.id;
         const response = await Skill.findById(id);
-        console.log(response);
+        // console.log(response);
         res.status(200).json(response);
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({ error: 'Skill not found' });
     }
 };

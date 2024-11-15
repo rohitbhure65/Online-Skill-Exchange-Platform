@@ -3,10 +3,10 @@ const User = require('../Model/user')
 exports.getUsers = async (req, res) => {
     try {
         const response = await User.find().populate('skills_offered').populate('skills_needed')
-        console.log(response)
+        // conosle.log(response)
         res.status(200).json({ response })
     } catch (err) {
-        console.log(err)
+        // conosle.log(err)
         res.status(500).json({ error: 'users not found' });
     }
 }
@@ -15,10 +15,10 @@ exports.getUser = async (req, res) => {
     try {
         const id = req.params.id
         const response = await User.findById(id).populate('skills_offered').populate('skills_needed')
-        console.log(response)
+        // conosle.log(response)
         res.status(200).json(response)
     } catch (err) {
-        console.log(err)
+        // conosle.log(err)
         res.status(500).json({ error: 'Error user not found ' });
     }
 }

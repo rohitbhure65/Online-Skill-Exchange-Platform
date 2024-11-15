@@ -5,10 +5,10 @@ const DB = () => {
     mongoose.set('strictQuery', true)
     mongoose.set('strictPopulate', false)
     mongoose.connect(process.env.MONGODB_CONNECT)
-        .then(()=>{
+        .then(() => {
             console.log(`Mongodb Connected`)
         })
-        .catch((err)=>{
+        .catch((err) => {
             console.log('MONGODB ERROR', err)
         })
 }
